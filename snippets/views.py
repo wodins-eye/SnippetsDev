@@ -8,7 +8,6 @@ from django.contrib.auth import decorators, mixins
 from snippets.models import CodeSnippet, Language, Package, Application
 from snippets import forms as fms
 
-import json
 
 DEBUG = True
 
@@ -16,27 +15,31 @@ DEBUG = True
 def homeView(request):
 
     recent_snippets = CodeSnippet.objects.order_by('last_modified')[:10:-1]
-    languages = Language.objects.order_by("name")
-    packages = Package.objects.order_by("name")
-    applications = Application.objects.order_by("name")
 
-    context = {'recent_snippets': recent_snippets,
-               'languages': languages,
-               'packages': packages,
-               'applications': applications}
+    context = {'recent_snippets': recent_snippets}
 
     return render(request, 'snippetsHome.html', context)
 
 def filterByLanguageView(request, lang):
-    snippets = CodeSnippet.objects.filter(language=lang)
-    languages = Language.objects.order_by("name")
-    packages = Package.objects.order_by("name")
-    applications = Application.objects.order_by("name")
+    snippets = CodeSnippet.objects.filter(language__name__contains=lang)
 
-    context = {'recent_snippets': snippets,
-               'languages': languages,
-               'packages': packages,
-               'applications': applications}
+
+    context = {'recent_snippets': snippets}
+
+    return render(request, 'snippetsFiltered.html', context)
+
+def filterByPackageView(request, pack):
+    snippets = CodeSnippet.objects.filter(package__name=pack)
+
+
+    context = {'recent_snippets': snippets}
+
+    return render(request, 'snippetsFiltered.html', context)
+
+def filterByApplicationView(request, app):
+    snippets = CodeSnippet.objects.filter(application__name=app)
+
+    context = {'recent_snippets': snippets}
 
     return render(request, 'snippetsFiltered.html', context)
 
@@ -60,19 +63,6 @@ def getApplications(request):
     app_json = serializers.serialize('json', Application.objects.all())
     print(f'\nPACKS: {app_json}')
     return JsonResponse(app_json, safe=False, content_type='application/json')
-
-
-def getFilteredSnippets(request, filter, filter_value):
-    if filter is None:
-        snips = CodeSnippet.objects.order_by('last_modified')[:10:-1]
-    else:
-        snips = CodeSnippet.objects.filter(filter= filter_value)
-
-    filtered_json = serializers.serialize('json', snips)
-    if DEBUG:
-        print(f'\nFILTERED JSON:\n{filtered_json}')
-    return JsonResponse(filtered_json, safe=False, content_type='application/json')
-
 
 def addSnippetView(request):
     form = fms.snippetsEditForm()

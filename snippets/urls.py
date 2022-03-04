@@ -18,9 +18,9 @@ urlpatterns = [
     path('getpackages/', views.getPackages, name= 'GetPacks'),
     path('getapplications/', views.getApplications, name= 'GetApps'),
     # Load the filtered snippets
-    path('language/<str:lang>/', views.filterByLanguageView, name= 'LangView'),
-    # path('package/<str:pack>/', views.filterByPackageView, name= 'PackView'),
-    # path('application/<str:app>/', views.filterByApplicationView, name= 'AppView'),
+    path('languages/<str:lang>/', views.filterByLanguageView, name= 'LangView'),
+    path('packages/<str:pack>/', views.filterByPackageView, name= 'PackView'),
+    path('applications/<str:app>/', views.filterByApplicationView, name= 'AppView'),
     path('/snippetDetail/<int:pk>/', views.detailSnippetView.as_view(), name= 'Detail'),
 
 ]

@@ -54,7 +54,7 @@ async  function updateMenu (url, model)  {
       for (let i=0; i<parsed_data.length; i++) {
         let item = document.createElement('a')
             item.setAttribute('class', 'menu-item')
-            item.setAttribute('href', `/getfilteredsnippets/${menu}/${parsed_data[i]['fields']['name']}`)
+            item.setAttribute('href', `/${model}/${parsed_data[i]['fields']['name']}`)
 
             console.log(parsed_data[i]['fields']['name'])
         item.innerText = `${parsed_data[i]['fields']['name']}`

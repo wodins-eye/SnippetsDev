@@ -17,7 +17,7 @@
         <link href="{% static 'css/snippetsStyle.css'%}" rel="stylesheet" media="screen">
         <script src="{% static 'js/snippets.js' %}"></script>
 
-        <div id="mySidenav" class="sidenav">
+        <div id="mySidenav" class="sidenav" >
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <div class="dropdown">
                     <a class="dropbtn" onclick="updateMenu({% url "snippets:GetLangs" %}, 'languages')" >Language</a>
@@ -32,7 +32,12 @@
                 <a class="dropbtn" onclick="updateMenu({% url 'snippets:GetApps' %}, 'applications')">Application</a>
                     <div class="dropdown-content" id="applications"></div>
             </div>
-                <li><a href="{% url 'snippets:AddSnip' %}">Add Snippet </a> </li>
+            <div class="homeBtn" id="homeBtn">
+                <a class="homeBtn" href="{% url 'snippets:Home' %}">Snippets Home </a>
+            </div>
+            <div class="addSnip">
+                <a class="addSnip" href="{% url 'snippets:AddSnip' %}">Add Snippet </a>
+            </div>
         </div>
     {% endblock %}
     {% block snippets-main %}
@@ -66,21 +71,4 @@
 
 </body>
 
-{#<script>#}
-{#    //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */#}
-{#var dropdown = document.getElementsByClassName("dropbtn");#}
-{#var i;#}
-{##}
-{#for (i = 0; i < dropdown.length; i++) {#}
-{#  dropdown[i].addEventListener("click", function() {#}
-{#    this.classList.toggle("active");#}
-{#    var dropdownContent = this.nextElementSibling;#}
-{#    if (dropdownContent.style.display === "block") {#}
-{#      dropdownContent.style.display = "none";#}
-{#    } else {#}
-{#      dropdownContent.style.display = "block";#}
-{#    }#}
-{#  });#}
-{#}#}
-{#</script>#}
 </html>
