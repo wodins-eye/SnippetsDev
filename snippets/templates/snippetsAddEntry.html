@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% load static %}
+    <link href="{% static 'css/snippetsStyle.css' %}" rel="stylesheet" media="screen">
+
+    <div class="wrapper">
+        <div class="card">
+            {% if user.is_authenticated %}
+                    <form method="post" >
+                        {% csrf_token %}
+                        <p> <h3>New {{ model }}:</h3> {{ form.name }} </p>
+
+                        <br>
+                        <button>Add</button>
+                    </form>
+            {% else %}
+                <h3>You Shouldn't Be Here, go <a href="{% url 'snippets:Home' %}">home</a></h3>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

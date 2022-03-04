@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% load static %}
+    <link href="{% static 'css/snippetsStyle.css' %}" rel="stylesheet" media="screen">
+
+    <div class="wrapper">
+        <div class="card">
+            {% if user.is_authenticated %}
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        <p> <h3>Snippet Name:</h3> {{ form.name }} </p>
+                        <p><h3>Language: <span> (<a href="{% url 'snippets:AddLang' %}"> add </a></span>)</h3>
+                            {{ form.language }} </p>
+                        <p><h3>Package: <span> (<a href="{% url 'snippets:AddPack' %}">add</a>)</span></h3>
+                            {{ form.package }} </p>
+                        <p><h3>Application: <span> (<a href="{% url 'snippets:AddApp' %}">add</a>)</span></h3>>
+                            {{ form.application }} </p>
+                        <p> {{ form.code}} </p>
+                        <p><h3>Summary:</h3>
+                            {{ form.summary }} </p>
+
+                        <br>
+                        <button>Update</button>
+                    </form>
+            {% else %}
+                <h3>You Shouldn't Be Here, go <a href="{% url 'public:home' %}">home</a></h3>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
